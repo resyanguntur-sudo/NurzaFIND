@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - NurzaFind</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <script>
+
+if(localStorage.getItem("login") !== "true"){
+    window.location.href = "login.html";
+}
+
+</script>
+
+    <nav>
+        <div class="logo">🕌 NurzaFind Admin</div>
+
+        <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="cari-barang.html">Cari Barang</a></li>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="#" onclick="logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="section">
+
+        <h1>Dashboard Takmir</h1>
+
+        <p>Selamat datang di Dashboard NurzaFind.</p>
+
+        <br>
+
+        <div class="stats-container">
+
+            <div class="stat-box">
+                <h2>23</h2>
+                <p>Barang Temuan</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>5</h2>
+                <p>Menunggu Klaim</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>18</h2>
+                <p>Amanah Tersampaikan</p>
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <div class="card">
+
+            <h2>Daftar Klaim Masuk</h2>
+
+            <table>
+
+                <tr>
+                    <th>Nama</th>
+                    <th>Barang</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+
+                <tr>
+                    <td>Ahmad Fauzi</td>
+                    <td>Dompet</td>
+                    <td>Menunggu</td>
+                    <td>
+                        <button onclick="verifikasi()">
+                            Verifikasi
+                        </button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Siti Aisyah</td>
+                    <td>Kunci Motor</td>
+                    <td>Menunggu</td>
+                    <td>
+                        <button onclick="verifikasi()">
+                            Verifikasi
+                        </button>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+   function logout(){
+
+    localStorage.removeItem("login");
+
+    window.location.href="login.html";
+
+}
+
+function verifikasi(){
+
+    alert(
+    "Klaim diverifikasi.\nKode Pengambilan: NZF-2026-001"
+    );
+
+}
+
+function tambahBarang(){
+
+    alert(
+    "Barang berhasil ditambahkan ke sistem."
+    );
+
+}
+
+</script>
+
+    function verifikasi(){
+
+        alert(
+        "Klaim berhasil diverifikasi.\nKode Pengambilan: NZF-2026-001"
+        );
+
+    }
+
+    </script>
+
+</body>
+
+</html>
+
+<h1>Dashboard Takmir</h1>
+
+<div class="card">
+
+<h2>Input Barang Temuan</h2>
+
+<input type="text"
+placeholder="Nama Barang">
+
+<br><br>
+
+<input type="text"
+placeholder="Lokasi Ditemukan">
+
+<br><br>
+
+<input type="date">
+
+<br><br>
+
+<textarea
+placeholder="Deskripsi Barang">
+</textarea>
+
+<br><br>
+
+<button class="btn"
+onclick="tambahBarang()">
+Tambah Barang
+</button>
+
+</div>

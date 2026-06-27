@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barang Temuan - NurzaFind</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">🕌 NurzaFind</div>
+
+        <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="cari-barang.html">Cari Barang</a></li>
+        </ul>
+    </nav>
+
+    <div class="section">
+
+        <h2>Barang Temuan</h2>
+
+        <input
+    type="text"
+    id="searchInput"
+    placeholder="🔍 Cari barang..."
+    onkeyup="cariBarang()"
+
+
+        <p>
+            Berikut merupakan barang yang telah diamankan
+            oleh Takmir Masjid Nuruzzaman.
+        </p>
+
+        <div class="barang-container">
+
+            <!-- Barang 1 -->
+
+            <div class="card barang">
+
+                <img src="assets/dompet.jpg" alt="Barang Temuan">
+
+                <h3>Dompet Kulit Hitam</h3>
+
+                <p>📍 Area Wudhu Putra</p>
+
+                <p>📅 20 Juni 2026</p>
+
+                <a href="detail-barang.html" class="btn">
+                    Lihat Detail
+                </a>
+
+            </div>
+
+            <!-- Barang 2 -->
+
+            <div class="card barang">
+
+                <img src="assets/powerbank.jpg" alt="Barang Temuan">
+
+                <h3>Powerbank Xiaomi</h3>
+
+                <p>📍 Ruang Utama Masjid</p>
+
+                <p>📅 18 Juni 2026</p>
+
+                <a href="detail-barang.html" class="btn">
+                    Lihat Detail
+                </a>
+
+            </div>
+
+            <!-- Barang 3 -->
+
+           <div class="card barang">
+
+                <img src="assets/kunci motor.jpg" alt="Barang Temuan">
+
+                <h3>Kunci Motor Honda</h3>
+
+                <p>📍 Area Parkir</p>
+
+                <p>📅 15 Juni 2026</p>
+
+                <a href="detail-barang.html" class="btn">
+                    Lihat Detail
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+function cariBarang(){
+
+    let input = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    let barang = document.querySelectorAll(".barang");
+
+    barang.forEach(function(card){
+
+        let nama = card.querySelector("h3")
+                       .innerText
+                       .toLowerCase();
+
+        if(nama.includes(input)){
+
+            card.style.display="block";
+
+        }else{
+
+            card.style.display="none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>

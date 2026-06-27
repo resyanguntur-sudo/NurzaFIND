@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajukan Klaim - NurzaFind</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">🕌 NurzaFind</div>
+
+        <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="cari-barang.html">Cari Barang</a></li>
+            <li><a href="login.html">Admin</a></li>
+        </ul>
+    </nav>
+
+    <div class="section">
+
+        <div class="card">
+
+            <h1>📦 Form Klaim Barang</h1>
+
+            <p>
+                Isi data berikut untuk mengajukan klaim kepemilikan barang.
+            </p>
+
+            <br>
+
+            <form onsubmit="kirimKlaim(event)">
+
+                <label>Nama Lengkap</label>
+                <br><br>
+                <input type="text" placeholder="Masukkan nama lengkap">
+
+                <br><br>
+
+                <label>Nomor HP</label>
+                <br><br>
+                <input type="text" placeholder="08xxxxxxxxxx">
+
+                <br><br>
+
+                <label>Email</label>
+                <br><br>
+                <input type="email" placeholder="nama@email.com">
+
+                <br><br>
+
+                <label>Fakultas / Instansi</label>
+                <br><br>
+                <input type="text" placeholder="Contoh: Fakultas Ekonomi">
+
+                <br><br>
+
+                <label>Deskripsi Barang</label>
+                <br><br>
+                <textarea rows="4" placeholder="Jelaskan barang yang Anda miliki"></textarea>
+
+                <br><br>
+
+                <label>Ciri Khusus Barang</label>
+                <br><br>
+                <textarea rows="4" placeholder="Tuliskan ciri khusus barang"></textarea>
+
+                <br><br>
+
+                <button class="btn">
+                    Kirim Klaim
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+<script>
+
+function kirimKlaim(event){
+
+    event.preventDefault();
+
+    alert("Klaim berhasil dikirim. Silakan menunggu verifikasi dari Takmir Nuruzzaman.");
+
+}
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - NurzaFind</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">🕌 NurzaFind</div>
+    </nav>
+
+    <div class="section">
+
+        <div class="card">
+
+            <h1>Login Takmir</h1>
+
+            <p>
+                Halaman ini hanya dapat diakses oleh pengelola
+                Masjid Nuruzzaman.
+            </p>
+
+            <br>
+
+            <label>Email</label>
+            <br><br>
+
+            <input type="email" id="email">
+
+            <br><br>
+
+            <label>Password</label>
+            <br><br>
+
+            <input type="password" id="password">
+
+            <br><br>
+
+            <button class="btn" onclick="loginAdmin()">
+                Login
+            </button>
+
+        </div>
+
+    </div>
+
+<script>
+
+function loginAdmin(){
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    if(
+        email === "admin@nurzafind.id"
+        &&
+        password === "123456"
+    ){
+
+        localStorage.setItem("login","true");
+
+window.location.href="admin.html";
+
+    }
+
+    else{
+
+        alert("Email atau password salah!");
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
