@@ -355,6 +355,159 @@
         toast.classList.remove("show");
       }, 3000);
     }
+
   </script>
+ // 1. Ambil data dari memori browser (LocalStorage) atau buat data awal jika masih kosong
+let masterDataBarang = JSON.parse(localStorage.getItem("databaseBarang")) || [
+  {
+    id: "NRZ-382",
+    nama: "Kunci Motor Honda Vario",
+    kategori: "Lain-lain",
+    lokasi: "Area Wudhu Pria",
+    tanggal: "2026-06-29",
+    status: "Tersedia",
+    foto: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400"
+  },
+  {
+    id: "NRZ-712",
+    nama: "Mukena Putih Bordir",
+    kategori: "Perlengkapan Ibadah",
+    lokasi: "Lemari Mukena Wanita",
+    tanggal: "2026-06-28",
+    status: "Tersedia",
+    foto: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400"
+  }
+];
+
+// Pastikan memori browser menyimpan data ini
+if (!localStorage.getItem("databaseBarang")) {
+  localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang));
+}
+
+let currentStatusFilter = "Semua";
+
+// 2. FUNGSI UTAMA: Menampilkan data barang ke dalam tabel HTML secara dinamis
+function renderTabelAdmin() {
+  let tbody = document.getElementById("adminTableBody");
+  if (!tbody) return;
+  
+  tbody.innerHTML = ""; // Bersihkan tabel dari data lama
+  
+  // Ambil teks dari kolom pencarian (jika ada)
+  let searchQuery = document.getElementById("adminSearchInput") ? document.getElementById("adminSearchInput").value.toLowerCase() : "";
+
+  masterDataBarang.forEach((barang, index) => {
+    // Filter Pencarian kata kunci
+    let matchSearch = barang.nama.toLowerCase().includes(searchQuery) || barang.id.toLowerCase().includes(searchQuery) || barang.lokasi.toLowerCase().includes(searchQuery);
+    
+    // Filter Tab Status (Semua, Tersedia, Diklaim)
+    let matchTab = (currentStatusFilter === "Semua" || barang.status === currentStatusFilter);
+    
+    if (matchSearch && matchTab) {
+      tbody.innerHTML += `
+        <tr>
+          <td><img src="${barang.foto}" width="40" height="40" style="object-fit:cover; border-radius:6px; cursor:pointer;" onclick="openPreview(this)"></td>
+          <td><strong>${barang.id}</strong></td>
+          <td>${barang.nama}</td>
+          <td>${barang.kategori}</td>
+          <td>📍 ${barang.lokasi}</td>
+          <td>${barang.tanggal}</td>
+          <td><span class="status-badge status-${barang.status.toLowerCase() === 'tersedia' ? 'success' : 'warning'}">${barang.status}</span></td>
+          <td>
+            <button class="btn-action btn-delete" onclick="hapusBarangSimulasi(${index})" style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:600;">Hapus</button>
+          </td>
+        </tr>
+      `;
+    }
+  });
+}
+
+// 3. FUNGSI UTAMA: Menangkap input form ketika takmir menekan tombol "Tambah Barang"
+document.getElementById("itemForm").addEventListener("submit", function(e) {
+  e.preventDefault(); // Mencegah halaman reload otomatis
+  
+  // Membuat objek barang baru dari isian form kamu
+  let itemBaru = {
+    id: "NRZ-" + Math.floor(100 + Math.random() * 900), // Membuat nomor ID acak otomatis
+    nama: document.getElementById("itemName").value,
+    kategori: document.getElementById("itemCategory").value,
+    lokasi: document.getElementById("itemLocation").value,
+    tanggal: document.getElementById("itemDate").value || new Date().toISOString().split('T')[0],
+    status: "Tersedia",
+    foto: document.getElementById("itemImgUrl").value || "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400"
+  };
+
+  masterDataBarang.unshift(itemBaru); // Masukkan barang baru ke daftar paling atas
+  localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang)); // Simpan permanen ke browser
+  
+  renderTabelAdmin(); // Perbarui isi tabel kanan secara langsung!
+  showToast("Barang Berhasil Di-upload ke Sistem!"); // Memunculkan pesan sukses animasi pop-up mu
+  this.reset(); // Mengosongkan form kiri kembali
+});
+
+// 4. FUNGSI UTAMA: Menghapus barang dari tabel simulasi
+function hapusBarangSimulasi(index) {
+  if (confirm("Apakah anda yakin ingin menghapus data barang temuan ini?")) {
+    masterDataBarang.splice(index, 1);
+    localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang));
+    renderTabelAdmin();
+    showToast("Barang berhasil dihapus dari sistem!");
+  }
+}
+
+// 5. Fungsi filter tab status bawaan codingan kamu
+function filterStatus(status, element) {
+  currentStatusFilter = status;
+  document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+  element.classList.add("active");
+  renderTabelAdmin();
+}
+
+// Fungsi filter pencarian ketik bawaan kamu
+function filterAdminMaster() {
+  renderTabelAdmin();
+}
+if (document.getElementById("adminSearchInput")) {
+  document.getElementById("adminSearchInput").addEventListener("input", filterAdminMaster);
+}
+
+// Pengendali Pop-up Preview Foto saat diklik
+function openPreview(imgElement) {
+  let modal = document.getElementById("imageModal");
+  let modalImg = document.getElementById("modalImg");
+  modal.style.display = "flex";
+  setTimeout(() => modal.classList.add("show"), 10);
+  modalImg.src = imgElement.src;
+}
+
+// Tutup preview pakai tombol ESC di keyboard
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) { closePreview(); }
+};
+
+function closePreview() {
+  let modal = document.getElementById("imageModal");
+  modal.classList.remove("show");
+  setTimeout(() => modal.style.display = "none", 300);
+}
+
+// Kotak notifikasi animasi pop-up (Toast)
+function showToast(message) {
+  let toast = document.getElementById("toastNotification");
+  document.getElementById("toastText").innerText = message;
+  toast.style.display = "flex";
+  setTimeout(() => toast.classList.add("show"), 10);
+  
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.style.display = "none", 300);
+  }, 3000);
+}
+
+// Jalankan fungsi tampilkan data pertama kali saat halaman admin dibuka
+renderTabelAdmin();
+
+
 </body>
 </html>
