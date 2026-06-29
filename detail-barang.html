@@ -5,73 +5,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Barang - NurzaFind</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #0b5e57;
+            --gold: #d4af37;
+            --gold-light: #fbf7eb;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 30px rgba(15, 118, 110, 0.05);
+        }
 
-    <link rel="stylesheet" href="style.css">
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; color: var(--text); }
+
+        nav {
+            background: #ffffff; border-bottom: 3px solid var(--gold); padding: 15px 0;
+        }
+        .nav-container { width: min(1140px, 92%); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.4rem; color: var(--primary); text-decoration: none; }
+        .logo img { height: 35px; }
+        nav ul { display: flex; list-style: none; gap: 15px; }
+        nav a { text-decoration: none; color: #475569; font-weight: 600; padding: 8px 16px; }
+
+        .detail-container {
+            width: min(1000px, 92%); margin: 50px auto; background: #ffffff;
+            border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border);
+            border-top: 4px solid var(--gold); display: flex; overflow: hidden; flex-wrap: wrap;
+        }
+
+        .detail-image { flex: 1; min-width: 350px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; }
+        .detail-image img { width: 100%; height: 100%; object-fit: cover; max-height: 450px; }
+
+        .detail-info { flex: 1; min-width: 350px; padding: 40px; display: flex; flex-direction: column; gap: 15px; }
+        .detail-info h1 { color: var(--primary); font-size: 2rem; }
+        .detail-info p { font-size: 1rem; color: #334155; }
+        
+        hr { border: 0; height: 1px; background: var(--border); margin: 10px 0; }
+        h3 { color: var(--primary); font-size: 1.15rem; }
+
+        .btn-klaim {
+            background: var(--primary); color: white; border: none; padding: 14px 28px;
+            font-size: 1rem; font-weight: 700; border-radius: 30px; cursor: pointer;
+            transition: all 0.2s; text-align: center; text-decoration: none; display: inline-block;
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2); width: fit-content;
+        }
+        .btn-klaim:hover { background: var(--primary-dark); }
+    </style>
 </head>
 
 <body>
 
-<nav>
-    <div class="logo">🕌 NurzaFind</div>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"><span>NurzaFind</span></a>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="cari-barang.html">Cari Barang</a></li>
+                <li><a href="riwayat.html">Riwayat</a></li>
+                <li><a href="login.html">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <ul>
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="cari-barang.html">Barang Temuan</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
-    </ul>
-</nav>
+    <main class="detail-container">
+        <div class="detail-image">
+            <img src="assets/dompet.jpg" alt="Dompet">
+        </div>
 
-<div class="detail-container">
+        <div class="detail-info">
+            <h1>Dompet Kulit Hitam</h1>
+            <p><b>📍 Lokasi:</b> Area Wudhu Putra</p>
+            <p><b>📅 Tanggal:</b> 20 Juni 2026</p>
+            <p><b>🟢 Status:</b> <span style="color:#166534; font-weight:bold;">Tersedia</span></p>
+            
+            <a href="klaim.html">
+                <button class="btn-klaim">Klaim Barang</button>
+            </a>
+            <hr>
 
-    <div class="detail-image">
-        <img src="assets/Dompet.jpg" alt="Dompet">
-    </div>
-
-    <div class="detail-info">
-
-        <h1>Dompet Kulit Hitam</h1>
-
-        <p><b>📍 Lokasi:</b> Area Wudhu Putra</p>
-
-        <p><b>📅 Tanggal:</b> 20 Juni 2026</p>
-
-        <p><b>🟢 Status:</b> Tersedia</p>
-
-        <a href="klaim.html">
-            <button class="btn-klaim">
-                Klaim Barang
-            </button>
-        </a>
-
-        <hr>
-
-        <h3>Deskripsi</h3>
-
-        <p>
-            Dompet ditemukan di sekitar area wudhu.
-            Detail isi dompet tidak ditampilkan untuk
-            menjaga keamanan proses verifikasi.
-        </p>
-
-        <hr>
-
-        <h3>Informasi Verifikasi</h3>
-
-        <p>
-            Pemohon harus mengetahui ciri khusus
-            barang untuk membuktikan kepemilikan.
-        </p>
-
-        <br>
-
-        <a href="klaim.html" class="btn">
-            Saya Pemilik Barang Ini
-        </a>
-
-    </div>
-
-</div>
+            <h3>Deskripsi</h3>
+            <p>Dompet ditemukan di sekitar area wudhu. Detail isi dompet sengaja dirahasiakan untuk proses validasi pencocokan bukti fisik saat serah terima.</p>
+        </div>
+    </main>
 
 </body>
-
 </html>

@@ -5,92 +5,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajukan Klaim - NurzaFind</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #0b5e57;
+            --gold: #d4af37;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 30px rgba(15, 118, 110, 0.05);
+        }
 
-    <link rel="stylesheet" href="style.css">
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; color: var(--text); }
+
+        nav { background: #ffffff; border-bottom: 3px solid var(--gold); padding: 15px 0; }
+        .nav-container { width: min(1140px, 92%); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.4rem; color: var(--primary); text-decoration: none; }
+        .logo img { height: 35px; }
+        nav ul { display: flex; list-style: none; gap: 15px; }
+        nav a { text-decoration: none; color: #475569; font-weight: 600; padding: 8px 16px; }
+
+        .section { width: min(650px, 92%); margin: 50px auto; }
+        .card { background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: var(--shadow); border-top: 4px solid var(--gold); }
+        .card h1 { color: var(--primary); text-align: center; margin-bottom: 10px; font-size: 1.8rem; }
+        .card p { text-align: center; color: #64748b; margin-bottom: 30px; font-size: 0.95rem; }
+
+        form { display: flex; flex-direction: column; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        label { font-weight: 600; color: var(--primary); font-size: 0.92rem; }
+        
+        input[type="text"], input[type="email"], textarea {
+            width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px;
+            font-size: 0.95rem; outline: none; background: #f8fafc; font-family: inherit;
+        }
+        input:focus, textarea:focus { border-color: var(--primary); background: #fff; }
+
+        .btn {
+            background: var(--primary); color: white; border: none; padding: 14px;
+            font-size: 1rem; font-weight: 700; border-radius: 30px; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2); transition: background 0.2s;
+        }
+        .btn:hover { background: var(--primary-dark); }
+    </style>
 </head>
 
 <body>
 
     <nav>
-        <div class="logo">🕌 NurzaFind</div>
-
-        <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="cari-barang.html">Cari Barang</a></li>
-            <li><a href="login.html">Admin</a></li>
-        </ul>
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"><span>NurzaFind</span></a>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="cari-barang.html">Cari Barang</a></li>
+                <li><a href="riwayat.html">Riwayat</a></li>
+                <li><a href="login.html">Admin</a></li>
+            </ul>
+        </div>
     </nav>
 
     <div class="section">
-
         <div class="card">
-
             <h1>📦 Form Klaim Barang</h1>
-
-            <p>
-                Isi data berikut untuk mengajukan klaim kepemilikan barang.
-            </p>
-
-            <br>
+            <p>Isi data berikut untuk mengajukan klaim kepemilikan barang.</p>
 
             <form onsubmit="kirimKlaim(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="form-group">
+                    <label>Nomor HP</label>
+                    <input type="text" placeholder="08xxxxxxxxxx" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="nama@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Fakultas / Instansi</label>
+                    <input type="text" placeholder="Contoh: Fakultas Ekonomi" required>
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi Barang</label>
+                    <textarea rows="4" placeholder="Jelaskan barang yang Anda miliki" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Ciri Khusus Barang</label>
+                    <textarea rows="4" placeholder="Tuliskan ciri khusus barang" required></textarea>
+                </div>
 
-                <label>Nama Lengkap</label>
-                <br><br>
-                <input type="text" placeholder="Masukkan nama lengkap">
-
-                <br><br>
-
-                <label>Nomor HP</label>
-                <br><br>
-                <input type="text" placeholder="08xxxxxxxxxx">
-
-                <br><br>
-
-                <label>Email</label>
-                <br><br>
-                <input type="email" placeholder="nama@email.com">
-
-                <br><br>
-
-                <label>Fakultas / Instansi</label>
-                <br><br>
-                <input type="text" placeholder="Contoh: Fakultas Ekonomi">
-
-                <br><br>
-
-                <label>Deskripsi Barang</label>
-                <br><br>
-                <textarea rows="4" placeholder="Jelaskan barang yang Anda miliki"></textarea>
-
-                <br><br>
-
-                <label>Ciri Khusus Barang</label>
-                <br><br>
-                <textarea rows="4" placeholder="Tuliskan ciri khusus barang"></textarea>
-
-                <br><br>
-
-                <button class="btn">
-                    Kirim Klaim
-                </button>
-
+                <button class="btn" type="submit">Kirim Klaim</button>
             </form>
-
         </div>
-
     </div>
-<script>
 
-function kirimKlaim(event){
-
-    event.preventDefault();
-
-    alert("Klaim berhasil dikirim. Silakan menunggu verifikasi dari Takmir Nuruzzaman.");
-
-}
-
-</script>
+    <script>
+        function kirimKlaim(event) {
+            event.preventDefault();
+            alert("Klaim berhasil dikirim! Tim Takmir akan segera meninjau ajuan Anda.");
+            window.location.href = "index.html";
+        }
+    </script>
+    
 </body>
-
 </html>

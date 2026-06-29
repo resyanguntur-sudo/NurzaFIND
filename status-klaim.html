@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Klaim | NurzaFind</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav>
+
+        <div class="logo">
+            <img src="assets/logo.png" alt="Logo">
+            <span>NurzaFind</span>
+        </div>
+
+        <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="cari-barang.html">Cari Barang</a></li>
+            <li><a href="status-klaim.html">Status Klaim</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="login.html">Admin</a></li>
+        </ul>
+
+    </nav>
+
+    <section class="section">
+
+       <div class="card">
+
+    <h2>📄 Cek Status Klaim</h2>
+
+    <p>
+        Masukkan nomor klaim yang diberikan oleh Admin NurzaFind.
+    </p>
+
+    <br>
+
+    <input
+        type="text"
+        placeholder="Contoh : NRZ-0001"
+        class="status-input">
+
+    <br><br>
+
+    <button class="btn">
+        Cek Status
+    </button>
+
+    <br><br>
+
+    <div class="status-list">
+
+    <!-- STATUS 1 -->
+    <div class="status-card verified">
+
+        <img src="assets/barang/dompet.jpg" alt="Dompet">
+
+        <div class="status-info">
+
+            <h3>Dompet Kulit Hitam</h3>
+
+            <p><strong>Nomor Klaim :</strong> NRZ-0001</p>
+
+            <p><strong>Tanggal :</strong> 29 Juni 2026</p>
+
+            <span class="badge verified">
+                🟢 Terverifikasi
+            </span>
+
+            <p class="keterangan">
+                Selamat! Klaim Anda telah diverifikasi.
+                Silakan datang ke Pos Barang Temuan
+                Masjid Nuruzzaman untuk mengambil barang.
+            </p>
+
+            <button class="btn">
+                Lihat Detail
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- STATUS 2 -->
+    <div class="status-card pending">
+
+        <img src="assets/barang/jam.jpg" alt="Jam">
+
+        <div class="status-info">
+
+            <h3>Jam Tangan Casio</h3>
+
+            <p><strong>Nomor Klaim :</strong> NRZ-0002</p>
+
+            <p><strong>Tanggal :</strong> 30 Juni 2026</p>
+
+            <span class="badge pending">
+                🟡 Sedang Diverifikasi
+            </span>
+
+            <p class="keterangan">
+                Petugas sedang mencocokkan data kepemilikan
+                barang. Mohon menunggu maksimal 1 × 24 jam.
+            </p>
+
+            <button class="btn">
+                Lihat Detail
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- STATUS 3 -->
+    <div class="status-card rejected">
+
+        <img src="assets/barang/tas.jpg" alt="Tas">
+
+        <div class="status-info">
+
+            <h3>Tas Ransel Hitam</h3>
+
+            <p><strong>Nomor Klaim :</strong> NRZ-0003</p>
+
+            <p><strong>Tanggal :</strong> 28 Juni 2026</p>
+
+            <span class="badge rejected">
+                🔴 Verifikasi Ditolak
+            </span>
+
+            <p class="keterangan">
+                Data yang Anda berikan belum sesuai
+                dengan informasi barang temuan.
+                Silakan ajukan klaim ulang.
+            </p>
+
+            <button class="btn">
+                Lihat Detail
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
