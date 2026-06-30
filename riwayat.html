@@ -10,7 +10,6 @@
             --primary: #0f766e;
             --primary-dark: #0b5e57;
             --gold: #d4af37;
-            --gold-light: #fbf7eb;
             --text: #1e293b;
             --muted: #64748b;
             --border: #e2e8f0;
@@ -21,45 +20,29 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; color: var(--text); }
 
-        /* Navigasi Utama dengan Garis Aksen Emas Mewah */
         nav { background: #ffffff; border-bottom: 3px solid var(--gold); padding: 15px 0; }
         .nav-container { width: min(1140px, 92%); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.4rem; color: var(--primary); text-decoration: none; }
-        .logo img { height: 35px; width: auto; object-fit: contain; }
+        .logo img { height: 35px; }
         nav ul { display: flex; list-style: none; gap: 15px; }
-        nav a { text-decoration: none; color: #475569; font-weight: 600; padding: 8px 16px; border-radius: 8px; transition: 0.2s; }
-        nav a:hover { color: var(--primary); background: #f1f5f9; }
-        nav a.active { color: var(--primary); background: var(--gold-light); }
+        nav a { text-decoration: none; color: #475569; font-weight: 600; padding: 8px 16px; }
+        nav a.active { color: var(--primary); background: #f1f5f9; border-radius: 8px; }
 
-        .section { width: min(1140px, 92%); margin: 40px auto; }
+        main { width: min(1140px, 92%); margin: 40px auto; }
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .header-section h1 { color: var(--primary); font-size: 2rem; margin-bottom: 8px; }
+
+        .search-bar { width: 100%; max-width: 500px; margin: 0 auto 40px auto; display: block; padding: 12px 20px; border: 1px solid var(--border); border-radius: 30px; outline: none; font-size: 0.95rem; background: #fff; box-shadow: var(--shadow); }
+
+        .riwayat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .riwayat-card { background: #ffffff; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; gap: 15px; padding: 15px; }
+        .riwayat-card img { width: 100px; height: 100px; object-fit: cover; border-radius: 10px; background: #e2e8f0; }
         
-        /* Desain Header Kartu Atas Berornamen Emas */
-        .card-top { background: #ffffff; border-radius: var(--radius); padding: 35px 20px; text-align: center; box-shadow: var(--shadow); border-top: 4px solid var(--gold); margin-bottom: 35px; border-left: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .card-top h2 { color: var(--primary); margin-bottom: 10px; font-size: 1.8rem; }
-        .card-top p { color: var(--muted); font-size: 1rem; }
+        .riwayat-info { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; color: #475569; }
+        .riwayat-info h3 { color: var(--text); font-size: 1.05rem; margin-bottom: 2px; }
+        .riwayat-info .kode { font-weight: bold; color: var(--gold); margin: 2px 0; }
         
-        /* Input Pencarian Bertema Emas Modis */
-        .status-input { width: 100%; max-width: 420px; padding: 12px 20px; border: 2px solid var(--border); border-radius: 25px; outline: none; text-align: center; margin-top: 20px; font-size: 0.95rem; transition: 0.2s; }
-        .status-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15); }
-        
-        /* Layout Grid List Kartu Riwayat */
-        .riwayat-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-        
-        /* Desain Kartu Riwayat Elegan Berbingkai Emas */
-        .riwayat-card { background: #ffffff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); display: flex; flex-direction: column; border-bottom: 4px solid var(--gold); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .riwayat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(214, 175, 55, 0.15); }
-        .riwayat-card img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border); }
-        
-        /* Detail Informasi di Dalam Kartu */
-        .riwayat-info { padding: 22px; display: flex; flex-direction: column; gap: 8px; }
-        .riwayat-info h3 { color: var(--primary); font-size: 1.25rem; margin-bottom: 4px; font-weight: 700; }
-        .riwayat-info p { font-size: 0.92rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
-        .riwayat-info p strong { color: #475569; font-weight: 600; }
-        
-        .kode { background: #f8fafc; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); width: fit-content; font-family: monospace; font-size: 0.9rem; font-weight: bold; color: var(--primary-dark); }
-        
-        /* Lencana Status Sukses Berwarna Emas Mewah */
-        .badge.verified { background: var(--gold-light); color: #b45309; border: 1px solid rgba(214, 175, 55, 0.3); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.82rem; width: fit-content; margin-top: 10px; display: flex; align-items: center; gap: 5px; }
+        .badge { width: fit-content; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-top: 4px; background: #dcfce7; color: #166534; }
     </style>
 </head>
 
@@ -67,10 +50,7 @@
 
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">
-                <img src="assets/logo.png" alt="Logo NurzaFind">
-                <span>NurzaFind</span>
-            </a>
+            <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"><span>NurzaFind</span></a>
             <ul>
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="cari-barang.html">Cari Barang</a></li>
@@ -80,72 +60,39 @@
         </div>
     </nav>
 
-    <main class="section">
-        <div class="card-top">
-            <h2>📦 Riwayat Pengembalian Barang</h2>
-            <p>Daftar seluruh inventaris barang temuan jamaah yang telah sukses diverifikasi dan diserahkan kembali kepada pemiliknya.</p>
-            <input type="text" id="filterInput" placeholder="Cari Kode Klaim, Nama Barang, atau Pemilik..." class="status-input" onkeyup="filterRiwayat()">
+    <main>
+        <div class="header-section">
+            <h1>🔱 Riwayat Pengembalian Barang</h1>
+            <p>Daftar transparansi serah terima log barang temuan kepada pemilik sah.</p>
         </div>
 
-        <div class="riwayat-list">
-            <div class="riwayat-card">
-                <img src="https://stevehandmade.com/wp-content/uploads/2022/02/TM0667-Tumbler-Termos-Vacuum-Botol-Minum-Custom-Nama-Gambar-Logo-Foto-Steve-Handmade-7.jpg" alt="Tumbler Minum">
-                <div class="riwayat-info">
-                    <h3>Tumbler Termos Hitam</h3>
-                    <p>👤 <strong>Pemilik:</strong> Ahmad Fauzi</p>
-                    <p class="kode">📄 Klaim: NRZ-0001</p>
-                    <p>📅 <strong>Diambil:</strong> 30 Juni 2026</p>
-                    <p>📍 <strong>Lokasi:</strong> Pos Barang Temuan</p>
-                    <p>👮 <strong>Diverifikasi:</strong> Admin Takmir</p>
-                    <span class="badge verified">🔱 Sukses Dikembalikan</span>
-                </div>
-            </div>
+        <input type="text" id="filterInput" class="search-bar" placeholder="Cari nama barang atau ID klaim..." onkeyup="filterRiwayat()">
 
-            <div class="riwayat-card">
-                <img src="https://cf.shopee.co.id/file/7486e0d57b7d1a480915691020a67ca4" alt="Dompet Coklat">
-                <div class="riwayat-info">
-                    <h3>Dompet Lipat Coklat</h3>
-                    <p>👤 <strong>Pemilik:</strong> Siti Rahma</p>
-                    <p class="kode">📄 Klaim: NRZ-0002</p>
-                    <p>📅 <strong>Diambil:</strong> 01 Juli 2026</p>
-                    <p>📍 <strong>Lokasi:</strong> Pos Barang Temuan</p>
-                    <p>👮 <strong>Diverifikasi:</strong> Admin Takmir</p>
-                    <span class="badge verified">🔱 Sukses Dikembalikan</span>
-                </div>
-            </div>
-
+        <div class="riwayat-grid" id="riwayatContainer">
             <div class="riwayat-card">
                 <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98p-llwywsvj3fs10c" alt="Kotak Pensil">
                 <div class="riwayat-info">
                     <h3>Kotak Pensil Kain</h3>
                     <p>👤 <strong>Pemilik:</strong> Budi Santoso</p>
-                    <p class="kode">📄 Klaim: NRZ-0003</p>
-                    <p>📅 <strong>Diambil:</strong> 02 Juli 2026</p>
-                    <p>📍 <strong>Lokasi:</strong> Pos Barang Temuan</p>
-                    <p>👮 <strong>Diverifikasi:</strong> Admin Takmir</p>
-                    <span class="badge verified">🔱 Sukses Dikembalikan</span>
+                    <p class="kode">📄 Klaim: NRZ-003</p>
+                    <p>📅 <strong>Diambil:</strong> 2026-06-27</p>
+                    <p>📍 <strong>Lokasi:</strong> Pos Takmir</p>
+                    <span class="badge">🔱 Sukses Dikembalikan</span>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // Fungsi pencarian pintar multi-kriteria (bisa cari nama barang, nomor klaim, atau nama orang)
         function filterRiwayat() {
             let val = document.getElementById("filterInput").value.toLowerCase();
             let items = document.querySelectorAll(".riwayat-card");
             
             items.forEach(item => {
-                let itemText = item.querySelector(".riwayat-info").innerText.toLowerCase();
-                
-                if (itemText.includes(val)) {
-                    item.style.display = "flex";
-                } else {
-                    item.style.display = "none";
-                }
+                let text = item.innerText.toLowerCase();
+                item.style.display = text.includes(val) ? "flex" : "none";
             });
         }
     </script>
-    
 </body>
 </html>

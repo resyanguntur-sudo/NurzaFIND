@@ -1,147 +1,179 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barang Temuan - NurzaFind</title>
-    <style>
-        :root {
-            --primary: #0f766e;
-            --primary-dark: #0b5e57;
-            --gold: #d4af37;
-            --gold-light: #fbf7eb;
-            --text: #1e293b;
-            --muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 10px 30px rgba(15, 118, 110, 0.05);
-            --radius: 16px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cari Barang Temuan - NurzaFind</title>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #0b5e57;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --gold: #d4af37;
+      --success-bg: #dcfce7;
+      --success-text: #166534;
+      --warning-bg: #fef3c7;
+      --warning-text: #92400e;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+    .container { width: min(1200px, 94%); margin: 0 auto; }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; color: var(--text); }
+    header { background: var(--card); border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 100; }
+    .header-wrap { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+    .brand { font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .brand-logo { height: 35px; width: auto; }
+    
+    nav ul { display: flex; list-style: none; gap: 10px; }
+    nav a { text-decoration: none; color: #475569; font-weight: 600; padding: 8px 16px; border-radius: 8px; transition: 0.2s; }
+    nav a.active, nav a:hover { background: #f1f5f9; color: var(--primary); }
 
-        nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 3px solid var(--gold);
-            position: sticky; top: 0; z-index: 1000; padding: 15px 0;
-        }
-        .nav-container { width: min(1140px, 92%); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.4rem; color: var(--primary); }
-        .logo img { height: 35px; }
-        nav ul { display: flex; list-style: none; gap: 15px; }
-        nav a { text-decoration: none; color: #475569; font-weight: 600; padding: 8px 16px; border-radius: 8px; }
-        nav a:hover, nav a.active { color: var(--primary); background: var(--gold-light); }
+    main { padding: 40px 0; }
+    .hero-section { text-align: center; margin-bottom: 40px; }
+    .hero-section h1 { color: var(--primary); font-size: 2.2rem; margin-bottom: 10px; }
+    .hero-section p { color: var(--muted); font-size: 1.05rem; }
 
-        .section { width: min(1140px, 92%); margin: 40px auto; }
-        .section h2 { color: var(--primary); font-size: 2rem; margin-bottom: 10px; text-align: center; }
-        .sub-p { text-align: center; color: var(--muted); margin-bottom: 30px; }
-        
-        .status-input {
-            width: 100%; max-width: 500px; padding: 14px 20px; border: 1px solid var(--border);
-            border-radius: 30px; outline: none; font-size: 1rem; box-shadow: var(--shadow);
-            text-align: center; transition: all 0.3s; margin: 0 auto 30px; display: block;
-        }
-        .status-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.1); }
+    .search-filter-card { background: var(--card); border-radius: var(--radius); padding: 25px; border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 35px; }
+    .search-row { display: grid; grid-template-columns: 1fr auto; gap: 15px; margin-bottom: 20px; }
+    @media (max-width: 576px) { .search-row { grid-template-columns: 1fr; } }
+    
+    .search-box { width: 100%; padding: 14px 20px; border: 1px solid var(--border); border-radius: 30px; outline: none; font-size: 1rem; background: #f8fafc; }
+    
+    .btn { border: none; border-radius: 30px; padding: 12px 24px; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; justify-content: center; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    
+    .filter-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 20px; }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab-btn { background: #f1f5f9; border: none; padding: 8px 18px; font-size: 0.88rem; font-weight: 600; border-radius: 20px; cursor: pointer; color: #475569; }
+    .tab-btn.active, .tab-btn:hover { background: var(--primary); color: white; }
 
-        .barang-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        
-        .card.barang {
-            background: #ffffff; border-radius: var(--radius); overflow: hidden;
-            box-shadow: var(--shadow); border: 1px solid var(--border); border-top: 4px solid var(--gold);
-            display: flex; flex-direction: column; transition: transform 0.3s;
-        }
-        .card.barang:hover { transform: translateY(-5px); }
-        .card.barang img { width: 100%; height: 220px; object-fit: cover; }
-        
-        .barang-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
-        .card.barang h3 { color: var(--primary); font-size: 1.25rem; }
-        .card.barang p { font-size: 0.92rem; color: #475569; }
+    .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+    .item-card { background: var(--card); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; flex-direction: column; }
+    
+    .img-container { width: 100%; height: 180px; position: relative; background: #e2e8f0; }
+    .img-container img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .badge-status { position: absolute; top: 12px; right: 12px; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+    .badge-available { background: var(--success-bg); color: var(--success-text); }
+    .badge-pending { background: var(--warning-bg); color: var(--warning-text); }
 
-        .btn-detail {
-            display: block; text-align: center; background: var(--primary); color: white;
-            text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 600;
-            margin-top: 10px; font-size: 0.95rem; transition: background 0.2s;
-        }
-        .btn-detail:hover { background: var(--primary-dark); }
-        #noMatch { display: none; text-align: center; grid-column: 1/-1; padding: 40px; color: var(--muted); font-weight: 600; }
-    </style>
+    .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; gap: 12px; }
+    .meta-id { font-size: 0.78rem; font-weight: 700; color: var(--gold); text-transform: uppercase; }
+    .card-title { font-size: 1.15rem; color: var(--text); font-weight: 700; }
+    
+    .info-list { display: flex; flex-direction: column; gap: 6px; font-size: 0.88rem; color: #475569; border-top: 1px dashed var(--border); padding-top: 12px; }
+    .info-item { display: flex; gap: 6px; align-items: center; }
+    .card-footer { padding: 0 20px 20px 20px; }
+    .btn-full { width: 100%; }
+  </style>
 </head>
-
 <body>
 
-    <nav>
-        <div class="nav-container">
-            <div class="logo"><img src="assets/logo.png" alt="Logo"><span>NurzaFind</span></div>
-            <ul>
-                <li><a href="index.html">Beranda</a></li>
-                <li><a href="cari-barang.html" class="active">Cari Barang</a></li>
-                <li><a href="riwayat.html">Riwayat</a></li>
-                <li><a href="login.html">Admin</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="section">
-        <h2>Barang Temuan</h2>
-        <p class="sub-p">Berikut merupakan barang yang telah diamankan oleh Takmir Masjid Nuruzzaman.</p>
-        
-        <input type="text" id="searchInput" placeholder="🔍 Cari barang..." class="status-input" onkeyup="cariBarang()">
-
-        <div class="barang-container">
-            <div class="card barang">
-                <img src="assets/dompet.jpg" alt="Dompet Kulit Hitam">
-                <div class="barang-info">
-                    <h3>Dompet Kulit Hitam</h3>
-                    <p>📍 Area Wudhu Putra</p>
-                    <p>📅 20 Juni 2026</p>
-                    <a href="detail-barang.html" class="btn-detail">Lihat Detail</a>
-                </div>
-            </div>
-
-            <div class="card barang">
-                <img src="assets/powerbank.jpg" alt="Powerbank Xiaomi">
-                <div class="barang-info">
-                    <h3>Powerbank Xiaomi</h3>
-                    <p>📍 Ruang Utama Masjid</p>
-                    <p>📅 18 Juni 2026</p>
-                    <a href="detail-barang.html" class="btn-detail">Lihat Detail</a>
-                </div>
-            </div>
-
-            <div class="card barang">
-                <img src="assets/kunci motor.jpg" alt="Kunci Motor Honda">
-                <div class="barang-info">
-                    <h3>Kunci Motor Honda</h3>
-                    <p>📍 Area Parkir</p>
-                    <p>📅 15 Juni 2026</p>
-                    <a href="detail-barang.html" class="btn-detail">Lihat Detail</a>
-                </div>
-            </div>
-            
-            <div id="noMatch">❌ Barang yang Anda cari tidak ditemukan.</div>
-        </div>
+  <header>
+    <div class="container header-wrap">
+      <a href="index.html" class="brand">
+        <img src="assets/logo.png" alt="Logo" class="brand-logo">
+        <span>NurzaFind</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="cari-barang.html" class="active">Cari Barang</a></li>
+          <li><a href="riwayat.html">Riwayat</a></li>
+          <li><a href="login.html">Admin</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <script>
-        function cariBarang() {
-            let input = document.getElementById("searchInput").value.toLowerCase();
-            let barang = document.querySelectorAll(".barang");
-            let noMatch = document.getElementById("noMatch");
-            let matchCount = 0;
+  <main class="container">
+    <section class="hero-section">
+      <h1>🔍 Temukan Barang Anda</h1>
+      <p>Gunakan fitur pencarian atau filter kategori di bawah untuk melacak kepemilikan log barang temuan.</p>
+    </section>
 
-            barang.forEach(function(card) {
-                let nama = card.querySelector("h3").innerText.toLowerCase();
-                if (nama.includes(input)) {
-                    card.style.display = "flex";
-                    matchCount++;
-                } else {
-                    card.style.display = "none";
-                }
-            });
-            noMatch.style.display = matchCount === 0 ? "block" : "none";
+    <section class="search-filter-card">
+      <div class="search-row">
+        <input type="text" id="userInputSearch" placeholder="Ketik nama barang atau lokasi penemuan..." class="search-box" onkeyup="renderBarangUser()">
+        <button class="btn btn-primary" onclick="renderBarangUser()">Cari Barang</button>
+      </div>
+      <div class="filter-row">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="filterKategori('semua', this)">Semua Kategori</button>
+          <button class="tab-btn" onclick="filterKategori('Elektronik', this)">Elektronik / Gadget</button>
+          <button class="tab-btn" onclick="filterKategori('Dokumen', this)">Dokumen / Dompet</button>
+          <button class="tab-btn" onclick="filterKategori('Perlengkapan Ibadah', this)">Perlengkapan Ibadah</button>
+          <button class="tab-btn" onclick="filterKategori('Lain-lain', this)">Lain-lain</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-container" id="userGridContainer"></section>
+  </main>
+
+  <script>
+    const defaultData = [
+      { id: "NRZ-001", nama: "Kunci Motor Honda Vario", kategori: "Lain-lain", lokasi: "Area Wudhu Pria", tanggal: "2026-06-29", status: "Tersedia", foto: "https://down-id.img.susercontent.com/file/sg-11134201-23020-p4wyf1lmn2mvc0" },
+      { id: "NRZ-002", nama: "Powerbank Anker 10000 mAh", kategori: "Elektronik", lokasi: "Area Charger Masjid", tanggal: "2026-06-28", status: "Tersedia", foto: "https://i5.walmartimages.com/asr/fd48656a-a733-4381-bf24-991ed92c9438_1.3a797809a977afce4d4f2a2bd63ae20a.jpeg" },
+      { id: "NRZ-004", nama: "Flashdisk 32GB", kategori: "Elektronik", lokasi: "Meja Operator Sound System", tanggal: "2026-06-26", status: "Tersedia", foto: "https://gratisongkir-storage.com/products/900x900/Z1LR52zMP1Hu.jpg" },
+      { id: "NRZ-005", nama: "Al-Qur'an Saku", kategori: "Perlengkapan Ibadah", lokasi: "Shaf Pertama", tanggal: "2026-06-25", status: "Pending Klaim", foto: "https://alazhar.pk/wp-content/uploads/2021/06/Quran-Pak-13-Lines-3A-1024x1024.jpg" }
+    ];
+
+    let masterDataBarang = JSON.parse(localStorage.getItem("databaseBarang")) || defaultData;
+    let currentKategoriFilter = 'semua';
+
+    function renderBarangUser() {
+      let grid = document.getElementById("userGridContainer");
+      grid.innerHTML = "";
+      let searchVal = document.getElementById("userInputSearch").value.toLowerCase();
+
+      masterDataBarang.forEach((barang) => {
+        let matchSearch = barang.nama.toLowerCase().includes(searchVal) || barang.lokasi.toLowerCase().includes(searchVal);
+        let matchKat = (currentKategoriFilter === 'semua' || barang.kategori === currentKategoriFilter);
+
+        if (matchSearch && matchKat) {
+          let badgeClass = barang.status === "Tersedia" ? "badge-available" : "badge-pending";
+          let buttonHtml = barang.status !== "Tersedia"
+            ? `<button class="btn btn-primary btn-full" disabled style="background:#cbd5e1;color:#94a3b8;cursor:not-allowed;">Barang Terklaim</button>`
+            : `<a href="detail-barang.html?id=${barang.id}" class="btn btn-primary btn-full">Klaim Barang</a>`;
+
+          // PERBAIKAN UTAMA: src di bawah ini memanggil langsung ${barang.foto} dari data asli objeknya
+          grid.innerHTML += `
+            <div class="item-card">
+              <div class="img-container">
+                <img src="${barang.foto}" alt="${barang.nama}">
+                <span class="badge-status ${badgeClass}">${barang.status}</span>
+              </div>
+              <div class="card-body">
+                <span class="meta-id">${barang.id}</span>
+                <h3 class="card-title">${barang.nama}</h3>
+                <div class="info-list">
+                  <div class="info-item">📍 <span>${barang.lokasi}</span></div>
+                  <div class="info-item">📅 <span>Penemuan: ${barang.tanggal}</span></div>
+                  <div class="info-item">🏷️ <span>${barang.kategori}</span></div>
+                </div>
+              </div>
+              <div class="card-footer">${buttonHtml}</div>
+            </div>`;
         }
-    </script>
+      });
+    }
+
+    function filterKategori(kat, element) {
+      currentKategoriFilter = kat;
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      element.classList.add("active");
+      renderBarangUser();
+    }
+
+    renderBarangUser();
+  </script>
 </body>
 </html>

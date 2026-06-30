@@ -31,7 +31,6 @@
     header { background: var(--card); border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 100; }
     .header-wrap { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
     
-    /* Brand Logo Wrapper */
     .brand { font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
     .brand-logo { height: 35px; width: auto; object-fit: contain; }
     
@@ -50,8 +49,8 @@
     .btn-outline { background: white; color: var(--text); border: 1px solid var(--border); }
     .btn-outline:hover { background: #f8fafc; border-color: var(--muted); }
     
-    .btn-edit { background: #2563eb; color: white; padding: 6px 12px; font-size: 0.85rem; border-radius: 6px; margin-right: 5px; border: none; cursor: pointer; }
-    .btn-delete { background: var(--danger); color: white; padding: 6px 12px; font-size: 0.85rem; border-radius: 6px; border: none; cursor: pointer; }
+    .btn-delete { background: var(--danger); color: white; padding: 6px 12px; font-size: 0.85rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+    .btn-delete:hover { background: #b91c1c; }
 
     .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
     .card { background: var(--card); border-radius: var(--radius); padding: 22px; border: 1px solid var(--border); box-shadow: var(--shadow); border-bottom: 4px solid var(--gold); }
@@ -84,7 +83,7 @@
     td img { width: 60px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
     td img:hover { transform: scale(1.08); }
     
-    .status { padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; display: inline-block; }
+    .status { padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; display: inline-block; text-align: center; min-width: 95px; }
     .status-available { background: var(--success-bg); color: var(--success-text); }
     .status-taken { background: #e0f2fe; color: #0369a1; }
     .status-pending { background: var(--warning-bg); color: var(--warning-text); }
@@ -97,11 +96,18 @@
 
     .security-box { background: #f8fafc; border: 1px dashed var(--border); padding: 12px; border-radius: 8px; font-size: 0.8rem; color: var(--muted); }
 
-    /* Modal Image Preview */
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+    /* Modal Setup */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; padding: 20px; }
     .modal.show { display: flex; opacity: 1; }
     .modal-content { max-width: 80%; max-height: 80%; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transform: scale(0.9); transition: transform 0.3s ease; }
     .modal.show .modal-content { transform: scale(1); }
+
+    .form-modal-card { background: white; width: min(450px, 100%); padding: 25px; border-radius: var(--radius); box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 4px solid var(--gold); position: relative; }
+    .form-modal-card h3 { color: var(--primary); margin-bottom: 15px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.88rem; color: #475569; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; outline: none; }
+    .form-modal-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
 
     /* Toast Notification */
     .toast { position: fixed; bottom: 20px; right: 20px; background: #1e293b; color: white; padding: 12px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; transform: translateY(100px); opacity: 0; transition: 0.3s ease-in-out; z-index: 2000; }
@@ -113,7 +119,6 @@
       .table-card { border: none; box-shadow: none; }
       table { border: 1px solid black; }
       th, td { border-bottom: 1px solid black; padding: 10px; }
-      .table-card::before { content: "LAPORAN INVENTARIS BARANG TEMUAN - MASJID NURUZZAMAN"; display: block; font-size: 1.4rem; font-weight: bold; text-align: center; margin-bottom: 20px; }
     }
   </style>
 </head>
@@ -125,7 +130,10 @@
         <img src="assets/logo.png" alt="Logo NurzaFind" class="brand-logo">
         <span>NurzaFind Admin</span>
       </a>
-      <nav><a href="index.html">Keluar</a></nav>
+      <nav>
+        <button onclick="forceResetDatabase()" style="background:#dc2626; color:white; border:none; padding:6px 12px; font-weight:600; border-radius:6px; cursor:pointer; margin-right:10px;">🔄 Reset & Paksa Muat Data</button>
+        <a href="index.html">Keluar</a>
+      </nav>
     </div>
   </header>
 
@@ -137,32 +145,32 @@
       </div>
       <div class="action-buttons">
         <button class="btn btn-outline" onclick="window.print()">🖨️ Cetak Laporan</button>
-        <button class="btn btn-primary" onclick="showToast('Fitur penambahan barang simulasi aktif!')">➕ Tambah Barang</button>
+        <button class="btn btn-primary" onclick="openAddModal()">➕ Tambah Barang</button>
       </div>
     </section>
 
     <section class="stats">
       <div class="card">
         <p class="stat-title">Total Rekam Barang</p>
-        <h2 class="stat-value">128</h2>
-        <p class="stat-desc">📈 +14 barang minggu ini</p>
+        <h2 class="stat-value" id="statTotal">0</h2>
+        <p class="stat-desc">📈 Akumulasi Sistem</p>
       </div>
       <div class="card">
-        <p class="stat-title">Selesai Dikembalikan</p>
-        <h2 class="stat-value">103</h2>
-        <p class="stat-desc" style="color: var(--primary);">Tingkat Penyelesaian: 80.4%</p>
+        <p class="stat-title">Selesai Dikembalikan (Diambil)</p>
+        <h2 class="stat-value" id="statDiambil">0</h2>
+        <p class="stat-desc" id="statPersen" style="color: var(--primary);">Tingkat Penyelesaian: 0%</p>
         <div class="progress-container">
-          <div class="progress-bar" style="width: 80.4%;"></div>
+          <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
         </div>
       </div>
       <div class="card">
         <p class="stat-title">Menggantung (Pending)</p>
-        <h2 class="stat-value">3</h2>
+        <h2 class="stat-value" id="statPending">0</h2>
         <p class="stat-desc" style="color: var(--danger);">⚠️ Butuh Validasi Klaim</p>
       </div>
       <div class="card">
         <p class="stat-title">Tersedia di Pos</p>
-        <h2 class="stat-value">22</h2>
+        <h2 class="stat-value" id="statTersedia">0</h2>
         <p class="stat-desc" style="color: #6b7280;">Menunggu Pemilik</p>
       </div>
     </section>
@@ -193,7 +201,9 @@
             <thead>
               <tr>
                 <th>Foto</th>
+                <th>ID Barang</th>
                 <th>Nama Barang</th>
+                <th>Kategori</th>
                 <th>Lokasi Penemuan</th>
                 <th>Tanggal Masuk</th>
                 <th>Status Gudang</th>
@@ -201,65 +211,6 @@
               </tr>
             </thead>
             <tbody id="adminTableBody">
-              <tr class="barang-row" data-status="Tersedia">
-                <td><img src="assets/dompet.jpg" alt="Dompet" onclick="openPreview(this)"></td>
-                <td><b>Dompet Kulit Hitam</b></td>
-                <td>Area Wudhu Putra</td>
-                <td>20 Juni 2026</td>
-                <td><span class="status status-available">Tersedia</span></td>
-                <td>
-                  <button class="btn-edit" onclick="showToast('Membuka menu edit Dompet...')">Edit</button>
-                  <button class="btn-delete" onclick="showToast('Simulasi: Gagal hapus data utama.')">Hapus</button>
-                </td>
-              </tr>
-              
-              <tr class="barang-row" data-status="Diambil">
-                <td><img src="https://stevehandmade.com/wp-content/uploads/2022/02/TM0667-Tumbler-Termos-Vacuum-Botol-Minum-Custom-Nama-Gambar-Logo-Foto-Steve-Handmade-7.jpg" alt="Tumbler Minum" onclick="openPreview(this)"></td>
-                <td><b>Tumbler Termos Hitam</b></td>
-                <td>Area Istirahat Serambi</td>
-                <td>19 Juni 2026</td>
-                <td><span class="status status-taken">Diambil</span></td>
-                <td>
-                  <button class="btn-edit" onclick="showToast('Membuka menu edit Tumbler...')">Edit</button>
-                  <button class="btn-delete" onclick="showToast('Simulasi: Gagal hapus data utama.')">Hapus</button>
-                </td>
-              </tr>
-              
-              <tr class="barang-row" data-status="Pending Klaim">
-                <td><img src="assets/kunci motor.jpg" alt="Kunci" onclick="openPreview(this)"></td>
-                <td><b>Kunci Motor Honda</b></td>
-                <td>Serambi Depan Timur</td>
-                <td>15 Juni 2026</td>
-                <td><span class="status status-pending">Pending Klaim</span></td>
-                <td>
-                  <button class="btn-edit" style="background: #16a34a;" onclick="showToast('Verifikasi Klaim NRZ-0003 Berhasil!')">Validasi</button>
-                  <button class="btn-delete" onclick="showToast('Simulasi: Gagal hapus data utama.')">Hapus</button>
-                </td>
-              </tr>
-              
-              <tr class="barang-row" data-status="Diambil">
-                <td><img src="https://cf.shopee.co.id/file/7486e0d57b7d1a480915691020a67ca4" alt="Dompet Coklat" onclick="openPreview(this)"></td>
-                <td><b>Dompet Lipat Coklat</b></td>
-                <td>Samping Pembatas Shof Putra</td>
-                <td>12 Juni 2026</td>
-                <td><span class="status status-taken">Diambil</span></td>
-                <td>
-                  <button class="btn-edit" onclick="showToast('Membuka menu edit Dompet Coklat...')">Edit</button>
-                  <button class="btn-delete" onclick="showToast('Simulasi: Gagal hapus data utama.')">Hapus</button>
-                </td>
-              </tr>
-              
-              <tr class="barang-row" data-status="Diambil">
-                <td><img src="https://down-id.img.susercontent.com/file/id-11134207-7r98p-llwywsvj3fs10c" alt="Kotak Pensil" onclick="openPreview(this)"></td>
-                <td><b>Kotak Pensil Kain</b></td>
-                <td>Meja Mengaji Belakang</td>
-                <td>10 Juni 2026</td>
-                <td><span class="status status-taken">Diambil</span></td>
-                <td>
-                  <button class="btn-edit" onclick="showToast('Membuka menu edit Kotak Pensil...')">Edit</button>
-                  <button class="btn-delete" onclick="showToast('Simulasi: Gagal hapus data utama.')">Hapus</button>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -270,16 +221,8 @@
           <h3 class="activity-title">⚡ Log Aktivitas</h3>
           <ul class="log-list" style="margin-top: 10px;">
             <li class="log-item">
-              <strong>Pak Ali (Takmir)</strong> mengubah status <em>Kunci Motor Honda</em> ke Pending Klaim.
-              <span class="log-time">10 Menit yang lalu</span>
-            </li>
-            <li class="log-item">
-              <strong>Sistem NurzaFind</strong> menerima formulir klaim baru mahasiswa FEB (NRZ-0004).
-              <span class="log-time">45 Menit yang lalu</span>
-            </li>
-            <li class="log-item">
-              <strong>Mas Budi (Marbot)</strong> mengunggah aset penemuan <em>Dompet Kulit Hitam</em>.
-              <span class="log-time">2 Jam yang lalu</span>
+              <strong>Takmir Panel</strong> sinkronisasi dengan database browser berhasil.
+              <span class="log-time">Baru saja</span>
             </li>
           </ul>
         </div>
@@ -287,11 +230,48 @@
         <div class="security-box">
           <strong>🔒 Sesi Keamanan Takmir:</strong><br>
           <span>IP: 192.168.1.104 (Pos Utama)</span><br>
-          <span>Sesi: Terautentikasi Segera</span>
+          <span>Sesi: Prototype Aktif</span>
         </div>
       </aside>
     </div>
   </main>
+
+  <div id="addFormModal" class="modal">
+    <div class="form-modal-card">
+      <h3>📝 Input Barang Temuan Baru</h3>
+      <form id="itemFormMaster">
+        <div class="form-group">
+          <label>Nama Barang</label>
+          <input type="text" id="itemName" placeholder="Contoh: Kunci Honda, Dompet Hitam" required />
+        </div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="itemCategory">
+            <option value="Elektronik">Elektronik / Gadget</option>
+            <option value="Dokumen">Dokumen / Dompet</option>
+            <option value="Perlengkapan Ibadah">Perlengkapan Ibadah</option>
+            <option value="Lain-lain">Lain-lain</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Lokasi Ditemukan</label>
+          <input type="text" id="itemLocation" placeholder="Contoh: Tempat Wudhu Pria" required />
+        </div>
+        <div class="form-group">
+          <label>Tanggal Ditemukan</label>
+          <input type="date" id="itemDate" />
+        </div>
+        <div class="form-group">
+          <label>Link Foto Gambar</label>
+          <input type="url" id="itemImgUrl" placeholder="https://example.com/foto.jpg" />
+        </div>
+        <div class="form-modal-btns">
+          <button type="button" class="btn btn-outline" onclick="closeAddModal()">Batal</button>
+          <button type="submit" class="btn btn-primary">🚀 Simpan & Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <div id="imageModal" class="modal" onclick="closePreview()">
     <img class="modal-content" id="modalImg">
@@ -300,32 +280,180 @@
   <div id="toastNotification" class="toast">ℹ️ <span id="toastText">Notifikasi</span></div>
 
   <script>
+    const defaultDataMaster = [
+      {
+        id: "NRZ-001",
+        nama: "Kunci Motor Honda Vario",
+        kategori: "Lain-lain",
+        lokasi: "Area Wudhu Pria",
+        tanggal: "2026-06-29",
+        status: "Tersedia",
+        foto: "https://down-id.img.susercontent.com/file/sg-11134201-23020-p4wyf1lmn2mvc0"
+      },
+      {
+        id: "NRZ-002",
+        nama: "Powerbank Anker 10000 mAh",
+        kategori: "Elektronik",
+        lokasi: "Area Charger Masjid",
+        tanggal: "2026-06-28",
+        status: "Tersedia",
+        foto: "https://i5.walmartimages.com/asr/fd48656a-a733-4381-bf24-991ed92c9438_1.3a797809a977afce4d4f2a2bd63ae20a.jpeg"
+      },
+      {
+        id: "NRZ-003",
+        nama: "Mukena Putih",
+        kategori: "Perlengkapan Ibadah",
+        lokasi: "Rak Mukena Wanita",
+        tanggal: "2026-06-27",
+        status: "Diambil",
+        foto: "https://down-id.img.susercontent.com/file/id-11134207-7ra0k-mb9bkzsdxb33cf"
+      },
+      {
+        id: "NRZ-004",
+        nama: "Flashdisk 32GB",
+        kategori: "Elektronik",
+        lokasi: "Meja Operator Sound System",
+        tanggal: "2026-06-26",
+        status: "Tersedia",
+        foto: "https://gratisongkir-storage.com/products/900x900/Z1LR52zMP1Hu.jpg"
+      },
+      {
+        id: "NRZ-005",
+        nama: "Al-Qur'an Saku",
+        kategori: "Perlengkapan Ibadah",
+        lokasi: "Shaf Pertama",
+        tanggal: "2026-06-25",
+        status: "Pending Klaim",
+        foto: "https://alazhar.pk/wp-content/uploads/2021/06/Quran-Pak-13-Lines-3A-1024x1024.jpg"
+      }
+    ];
+
+    let masterDataBarang = JSON.parse(localStorage.getItem("databaseBarang")) || [];
+    if (masterDataBarang.length === 0) {
+      masterDataBarang = [...defaultDataMaster];
+      localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang));
+    }
+
+    function forceResetDatabase() {
+      localStorage.setItem("databaseBarang", JSON.stringify(defaultDataMaster));
+      masterDataBarang = [...defaultDataMaster];
+      renderTabelAdmin();
+      alert("Database Berhasil Di-Reset ke Data Awal!");
+    }
+
     let currentStatusFilter = 'semua';
 
-    // Mesin pencarian gabungan teks & filter status tab
-    function filterAdminMaster() {
-      let searchVal = document.getElementById("adminSearch").value.toLowerCase();
-      let rows = document.querySelectorAll(".barang-row");
+    function renderTabelAdmin() {
+      let tbody = document.getElementById("adminTableBody");
+      if (!tbody) return;
       
-      rows.forEach(row => {
-        let rowText = row.innerText.toLowerCase();
-        let rowStatus = row.getAttribute("data-status");
-        
-        let matchSearch = rowText.includes(searchVal);
-        let matchTab = (currentStatusFilter === 'semua' || rowStatus === currentStatusFilter);
-        
-        row.style.display = (matchSearch && matchTab) ? "" : "none";
+      tbody.innerHTML = "";
+      let searchVal = document.getElementById("adminSearch").value.toLowerCase();
+      
+      let liveTersedia = 0;
+      let livePending = 0;
+      let liveDiambil = 0;
+
+      masterDataBarang.forEach((barang) => {
+        if (barang.status === "Tersedia") liveTersedia++;
+        if (barang.status === "Pending Klaim" || barang.status === "Pending") livePending++;
+        if (barang.status === "Diambil") liveDiambil++;
       });
+
+      let liveTotal = masterDataBarang.length;
+
+      masterDataBarang.forEach((barang, index) => {
+        let currentStatus = barang.status;
+        if (currentStatus === "Pending") currentStatus = "Pending Klaim";
+
+        let matchSearch = barang.nama.toLowerCase().includes(searchVal) || barang.lokasi.toLowerCase().includes(searchVal) || barang.id.toLowerCase().includes(searchVal);
+        let matchTab = (currentStatusFilter === 'semua' || currentStatus === currentStatusFilter);
+        
+        if (matchSearch && matchTab) {
+          let badgeClass = "status-available";
+          if (currentStatus === "Diambil") badgeClass = "status-taken";
+          if (currentStatus === "Pending Klaim") badgeClass = "status-pending";
+
+          let aksiPengelolaan = `<button class="btn-delete" onclick="hapusBarangSimulasi(${index})">Hapus</button>`;
+
+          tbody.innerHTML += `
+            <tr>
+              <td><img src="${barang.foto || 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400'}" alt="Foto" onclick="openPreview(this)"></td>
+              <td><strong>${barang.id}</strong></td>
+              <td><b>📌 ${barang.nama}</b></td>
+              <td>${barang.kategori}</td>
+              <td>📍 ${barang.lokasi}</td>
+              <td>${barang.tanggal}</td>
+              <td><span class="status ${badgeClass}">${currentStatus}</span></td>
+              <td>${aksiPengelolaan}</td>
+            </tr>
+          `;
+        }
+      });
+
+      let persenPenyelesaian = liveTotal > 0 ? ((liveDiambil / liveTotal) * 100).toFixed(1) : 0;
+
+      document.getElementById("statTotal").innerText = liveTotal;
+      document.getElementById("statTersedia").innerText = liveTersedia;
+      document.getElementById("statPending").innerText = livePending;
+      document.getElementById("statDiambil").innerText = liveDiambil;
+      document.getElementById("statPersen").innerText = `Tingkat Penyelesaian: ${persenPenyelesaian}%`;
+      document.getElementById("progressBar").style.width = `${persenPenyelesaian}%`;
     }
+
+    document.getElementById("itemFormMaster").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let defaultFoto = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400";
+      
+      let itemBaru = {
+        id: "NRZ-" + Math.floor(100 + Math.random() * 900),
+        nama: document.getElementById("itemName").value,
+        kategori: document.getElementById("itemCategory").value,
+        lokasi: document.getElementById("itemLocation").value,
+        tanggal: document.getElementById("itemDate").value || new Date().toISOString().split('T')[0],
+        status: "Tersedia",
+        foto: document.getElementById("itemImgUrl").value || defaultFoto
+      };
+
+      masterDataBarang.unshift(itemBaru);
+      localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang));
+      
+      renderTabelAdmin();
+      closeAddModal();
+      showToast("🚀 Log Barang Berhasil Ditambahkan!");
+      this.reset();
+    });
+
+    function hapusBarangSimulasi(index) {
+      if (confirm("Apakah anda yakin ingin menghapus data barang temuan ini?")) {
+        masterDataBarang.splice(index, 1);
+        localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang));
+        renderTabelAdmin();
+        showToast("🗑️ Log barang berhasil dihapus.");
+      }
+    }
+
+    function filterAdminMaster() { renderTabelAdmin(); }
 
     function filterStatus(status, element) {
       currentStatusFilter = status;
       document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
       element.classList.add("active");
-      filterAdminMaster();
+      renderTabelAdmin();
     }
 
-    // Pengendali Pop-up Preview Foto saat diklik
+    function openAddModal() {
+      let modal = document.getElementById("addFormModal");
+      modal.style.display = "flex";
+      setTimeout(() => modal.classList.add("show"), 10);
+    }
+
+    function closeAddModal() {
+      let modal = document.getElementById("addFormModal");
+      modal.classList.remove("show");
+      setTimeout(() => modal.style.display = "none", 300);
+    }
+
     function openPreview(imgElement) {
       let modal = document.getElementById("imageModal");
       let modalImg = document.getElementById("modalImg");
@@ -334,180 +462,30 @@
       modalImg.src = imgElement.src;
     }
 
-    // Tutup preview pakai tombol ESC di keyboard
-    document.onkeydown = function(evt) {
-        evt = evt || window.event;
-        if (evt.keyCode == 27) { closePreview(); }
-    };
-
     function closePreview() {
       let modal = document.getElementById("imageModal");
       modal.classList.remove("show");
       setTimeout(() => modal.style.display = "none", 300);
     }
 
-    // Kotak notifikasi animasi pop-up (Toast)
+    document.onkeydown = function(evt) {
+      evt = evt || window.event;
+      if (evt.keyCode == 27) { closePreview(); closeAddModal(); }
+    };
+
     function showToast(message) {
       let toast = document.getElementById("toastNotification");
       document.getElementById("toastText").innerText = message;
-      toast.classList.add("show");
+      toast.style.display = "flex";
+      setTimeout(() => toast.classList.add("show"), 10);
+      
       setTimeout(() => {
         toast.classList.remove("show");
+        setTimeout(() => toast.style.display = "none", 300);
       }, 3000);
     }
 
-  </script>
- // 1. Ambil data dari memori browser (LocalStorage) atau buat data awal jika masih kosong
-let masterDataBarang = JSON.parse(localStorage.getItem("databaseBarang")) || [
-  {
-    id: "NRZ-382",
-    nama: "Kunci Motor Honda Vario",
-    kategori: "Lain-lain",
-    lokasi: "Area Wudhu Pria",
-    tanggal: "2026-06-29",
-    status: "Tersedia",
-    foto: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400"
-  },
-  {
-    id: "NRZ-712",
-    nama: "Mukena Putih Bordir",
-    kategori: "Perlengkapan Ibadah",
-    lokasi: "Lemari Mukena Wanita",
-    tanggal: "2026-06-28",
-    status: "Tersedia",
-    foto: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400"
-  }
-];
-
-// Pastikan memori browser menyimpan data ini
-if (!localStorage.getItem("databaseBarang")) {
-  localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang));
-}
-
-let currentStatusFilter = "Semua";
-
-// 2. FUNGSI UTAMA: Menampilkan data barang ke dalam tabel HTML secara dinamis
-function renderTabelAdmin() {
-  let tbody = document.getElementById("adminTableBody");
-  if (!tbody) return;
-  
-  tbody.innerHTML = ""; // Bersihkan tabel dari data lama
-  
-  // Ambil teks dari kolom pencarian (jika ada)
-  let searchQuery = document.getElementById("adminSearchInput") ? document.getElementById("adminSearchInput").value.toLowerCase() : "";
-
-  masterDataBarang.forEach((barang, index) => {
-    // Filter Pencarian kata kunci
-    let matchSearch = barang.nama.toLowerCase().includes(searchQuery) || barang.id.toLowerCase().includes(searchQuery) || barang.lokasi.toLowerCase().includes(searchQuery);
-    
-    // Filter Tab Status (Semua, Tersedia, Diklaim)
-    let matchTab = (currentStatusFilter === "Semua" || barang.status === currentStatusFilter);
-    
-    if (matchSearch && matchTab) {
-      tbody.innerHTML += `
-        <tr>
-          <td><img src="${barang.foto}" width="40" height="40" style="object-fit:cover; border-radius:6px; cursor:pointer;" onclick="openPreview(this)"></td>
-          <td><strong>${barang.id}</strong></td>
-          <td>${barang.nama}</td>
-          <td>${barang.kategori}</td>
-          <td>📍 ${barang.lokasi}</td>
-          <td>${barang.tanggal}</td>
-          <td><span class="status-badge status-${barang.status.toLowerCase() === 'tersedia' ? 'success' : 'warning'}">${barang.status}</span></td>
-          <td>
-            <button class="btn-action btn-delete" onclick="hapusBarangSimulasi(${index})" style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:600;">Hapus</button>
-          </td>
-        </tr>
-      `;
-    }
-  });
-}
-
-// 3. FUNGSI UTAMA: Menangkap input form ketika takmir menekan tombol "Tambah Barang"
-document.getElementById("itemFormMaster").addEventListener("submit", function(e) {
-  e.preventDefault(); // Mencegah halaman reload otomatis
-  
-  // Membuat objek barang baru dari isian form kamu
-  let itemBaru = {
-    id: "NRZ-" + Math.floor(100 + Math.random() * 900), // Membuat nomor ID acak otomatis
-    nama: document.getElementById("itemName").value,
-    kategori: document.getElementById("itemCategory").value,
-    lokasi: document.getElementById("itemLocation").value,
-    tanggal: document.getElementById("itemDate").value || new Date().toISOString().split('T')[0],
-    status: "Tersedia",
-    foto: document.getElementById("itemImgUrl").value || "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400"
-  };
-
-  masterDataBarang.unshift(itemBaru); // Masukkan barang baru ke daftar paling atas
-  localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang)); // Simpan permanen ke browser
-  
-  renderTabelAdmin(); // Perbarui isi tabel kanan secara langsung!
-  showToast("Barang Berhasil Di-upload ke Sistem!"); // Memunculkan pesan sukses animasi pop-up mu
-  this.reset(); // Mengosongkan form kiri kembali
-});
-
-// 4. FUNGSI UTAMA: Menghapus barang dari tabel simulasi
-function hapusBarangSimulasi(index) {
-  if (confirm("Apakah anda yakin ingin menghapus data barang temuan ini?")) {
-    masterDataBarang.splice(index, 1);
-    localStorage.setItem("databaseBarang", JSON.stringify(masterDataBarang));
     renderTabelAdmin();
-    showToast("Barang berhasil dihapus dari sistem!");
-  }
-}
-
-// 5. Fungsi filter tab status bawaan codingan kamu
-function filterStatus(status, element) {
-  currentStatusFilter = status;
-  document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-  element.classList.add("active");
-  renderTabelAdmin();
-}
-
-// Fungsi filter pencarian ketik bawaan kamu
-function filterAdminMaster() {
-  renderTabelAdmin();
-}
-if (document.getElementById("adminSearchInput")) {
-  document.getElementById("adminSearchInput").addEventListener("input", filterAdminMaster);
-}
-
-// Pengendali Pop-up Preview Foto saat diklik
-function openPreview(imgElement) {
-  let modal = document.getElementById("imageModal");
-  let modalImg = document.getElementById("modalImg");
-  modal.style.display = "flex";
-  setTimeout(() => modal.classList.add("show"), 10);
-  modalImg.src = imgElement.src;
-}
-
-// Tutup preview pakai tombol ESC di keyboard
-document.onkeydown = function(evt) {
-    evt = evt || window.event;
-    if (evt.keyCode == 27) { closePreview(); }
-};
-
-function closePreview() {
-  let modal = document.getElementById("imageModal");
-  modal.classList.remove("show");
-  setTimeout(() => modal.style.display = "none", 300);
-}
-
-// Kotak notifikasi animasi pop-up (Toast)
-function showToast(message) {
-  let toast = document.getElementById("toastNotification");
-  document.getElementById("toastText").innerText = message;
-  toast.style.display = "flex";
-  setTimeout(() => toast.classList.add("show"), 10);
-  
-  setTimeout(() => {
-    toast.classList.remove("show");
-    setTimeout(() => toast.style.display = "none", 300);
-  }, 3000);
-}
-
-// Jalankan fungsi tampilkan data pertama kali saat halaman admin dibuka
-renderTabelAdmin();
-
-
+  </script>
 </body>
 </html>

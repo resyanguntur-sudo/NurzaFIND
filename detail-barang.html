@@ -30,27 +30,28 @@
 
         .detail-container {
             width: min(1000px, 92%); margin: 50px auto; background: #ffffff;
-            border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border);
-            border-top: 4px solid var(--gold); display: flex; overflow: hidden; flex-wrap: wrap;
+            border-radius: 16px; box-shadow: var(--shadow); display: grid;
+            grid-template-columns: 1fr 1fr; overflow: hidden; border-top: 4px solid var(--gold);
         }
 
-        .detail-image { flex: 1; min-width: 350px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; }
-        .detail-image img { width: 100%; height: 100%; object-fit: cover; max-height: 450px; }
+        @media (max-width: 768px) {
+            .detail-container { grid-template-columns: 1fr; }
+        }
 
-        .detail-info { flex: 1; min-width: 350px; padding: 40px; display: flex; flex-direction: column; gap: 15px; }
-        .detail-info h1 { color: var(--primary); font-size: 2rem; }
-        .detail-info p { font-size: 1rem; color: #334155; }
-        
-        hr { border: 0; height: 1px; background: var(--border); margin: 10px 0; }
-        h3 { color: var(--primary); font-size: 1.15rem; }
+        .detail-image { background: #cbd5e1; display: flex; align-items: center; justify-content: center; min-height: 300px; }
+        .detail-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .detail-info { padding: 40px; display: flex; flex-direction: column; gap: 20px; }
+        .detail-info h1 { color: var(--primary); font-size: 2rem; margin-bottom: 10px; }
+        .detail-info p { font-size: 1.05rem; color: #475569; }
 
         .btn-klaim {
-            background: var(--primary); color: white; border: none; padding: 14px 28px;
-            font-size: 1rem; font-weight: 700; border-radius: 30px; cursor: pointer;
-            transition: all 0.2s; text-align: center; text-decoration: none; display: inline-block;
-            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2); width: fit-content;
+            background: var(--primary); color: white; text-decoration: none;
+            padding: 14px 28px; font-weight: 700; border-radius: 30px; display: inline-block;
+            text-align: center; width: fit-content; transition: background 0.2s; margin-top: 10px;
         }
         .btn-klaim:hover { background: var(--primary-dark); }
+        .btn-disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; pointer-events: none; }
     </style>
 </head>
 
@@ -70,24 +71,53 @@
 
     <main class="detail-container">
         <div class="detail-image">
-            <img src="assets/dompet.jpg" alt="Dompet">
+            <img id="detailFoto" src="assets/dompet.jpg" alt="Foto Barang">
         </div>
 
         <div class="detail-info">
-            <h1>Dompet Kulit Hitam</h1>
-            <p><b>📍 Lokasi:</b> Area Wudhu Putra</p>
-            <p><b>📅 Tanggal:</b> 20 Juni 2026</p>
-            <p><b>🟢 Status:</b> <span style="color:#166534; font-weight:bold;">Tersedia</span></p>
+            <h1 id="detailNama">Memuat Data Barang...</h1>
+            <p><b>📍 Lokasi:</b> <span id="detailLokasi">-</span></p>
+            <p><b>📅 Tanggal:</b> <span id="detailTanggal">-</span></p>
+            <p><b>🟢 Status:</b> <span id="detailStatus" style="color:#166534; font-weight:bold;">-</span></p>
             
-            <a href="klaim.html">
-                <button class="btn-klaim">Klaim Barang</button>
-            </a>
-            <hr>
-
-            <h3>Deskripsi</h3>
-            <p>Dompet ditemukan di sekitar area wudhu. Detail isi dompet sengaja dirahasiakan untuk proses validasi pencocokan bukti fisik saat serah terima.</p>
+            <a href="#" id="btnClaimAction" class="btn-klaim">Ajukan Klaim</a>
         </div>
     </main>
 
+    <script>
+        // Membaca Parameter ID Barang dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const barangId = urlParams.get('id');
+
+        // Memuat Database Barang dari LocalStorage
+        let masterDataBarang = JSON.parse(localStorage.getItem("databaseBarang")) || [];
+        let barangDitemukan = masterDataBarang.find(b => b.id === barangId);
+
+        if (barangDitemukan) {
+            // Update Tampilan secara Dinamis
+            document.getElementById("detailNama").innerText = barangDitemukan.nama;
+            document.getElementById("detailLokasi").innerText = barangDitemukan.lokasi;
+            document.getElementById("detailTanggal").innerText = barangDitemukan.tanggal;
+            document.getElementById("detailFoto").src = barangDitemukan.foto;
+            
+            let statusText = barangDitemukan.status;
+            let statusEl = document.getElementById("detailStatus");
+            statusEl.innerText = statusText;
+
+            let btnClaim = document.getElementById("btnClaimAction");
+
+            if (statusText !== "Tersedia") {
+                statusEl.style.color = "#92400e"; // Kuning kecokelatan untuk pending/terklaim
+                btnClaim.innerText = "Barang Terklaim";
+                btnClaim.classList.add("btn-disabled");
+            } else {
+                statusEl.style.color = "#166534"; // Hijau untuk tersedia
+                btnClaim.href = `klaim.html?id=${barangDitemukan.id}`;
+            }
+        } else {
+            document.getElementById("detailNama").innerText = "⚠️ Data Barang Tidak Ditemukan";
+        }
+    </script>
+    
 </body>
 </html>
